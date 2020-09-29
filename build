@@ -1,0 +1,7 @@
+#!/bin/bash
+
+pio run -e BIGTREE_SKR_PRO $@\
+&& rm /run/media/gedweb/SKR_PRO/* \
+&& cp /home/gedweb/Develop/Marlin/.pio/build/BIGTREE_SKR_PRO/firmware.bin /run/media/gedweb/SKR_PRO/ \
+&& sync \
+&& echo DONE!

@@ -485,7 +485,7 @@
 // When first starting the main fan, run it at full speed for the
 // given number of milliseconds.  This gets the fan spinning reliably
 // before setting a PWM value. (Does not work with software PWM for fan on Sanguinololu)
-//#define FAN_KICKSTART_TIME 100
+#define FAN_KICKSTART_TIME 100
 
 // Some coolers may require a non-zero "off" state.
 //#define FAN_OFF_PWM  1
@@ -551,7 +551,7 @@
  * Multiple extruders can be assigned to the same pin in which case
  * the fan will turn on when any selected extruder is above the threshold.
  */
-#define E0_AUTO_FAN_PIN -1
+#define E0_AUTO_FAN_PIN FAN2_PIN
 #define E1_AUTO_FAN_PIN -1
 #define E2_AUTO_FAN_PIN -1
 #define E3_AUTO_FAN_PIN -1
@@ -753,8 +753,9 @@
 
 //#define SENSORLESS_BACKOFF_MM  { 2, 2, 0 }  // (mm) Backoff from endstops before sensorless homing
 
-#define HOMING_BUMP_MM      { 5, 5, 2 }       // (mm) Backoff from endstops after first bump
-#define HOMING_BUMP_DIVISOR { 2, 2, 4 }       // Re-Bump Speed Divisor (Divides the Homing Feedrate)
+#define HOMING_BUMP_MM      { 5, 5, 5 }       // (mm) Backoff from endstops after first bump
+                                              // For delta all values must be the same
+#define HOMING_BUMP_DIVISOR { 10, 10, 10 }       // Re-Bump Speed Divisor (Divides the Homing Feedrate)
 
 //#define HOMING_BACKOFF_POST_MM { 2, 2, 2 }  // (mm) Backoff from endstops after homing
 
@@ -884,7 +885,7 @@
 
   // On a 300mm bed a 5% grade would give a misalignment of ~1.5cm
   #define G34_MAX_GRADE              5    // (%) Maximum incline that G34 will handle
-  #define Z_STEPPER_ALIGN_ITERATIONS 5    // Number of iterations to apply during alignment
+  #define Z_STEPPER_ALIGN_ITERATIONS 3    // Number of iterations to apply during alignment
   #define Z_STEPPER_ALIGN_ACC        0.02 // Stop iterating early if the accuracy is better than this
   #define RESTORE_LEVELING_AFTER_G34      // Restore leveling after G34 is done?
   // After G34, re-home Z (G28 Z) or just calculate it from the last probe heights?
@@ -945,7 +946,7 @@
  * Set DISABLE_INACTIVE_? 'true' to shut down axis steppers after an idle period.
  * The Deactive Time can be overridden with M18 and M84. Set to 0 for No Timeout.
  */
-#define DEFAULT_STEPPER_DEACTIVE_TIME 120
+#define DEFAULT_STEPPER_DEACTIVE_TIME 60
 #define DISABLE_INACTIVE_X true
 #define DISABLE_INACTIVE_Y true
 #define DISABLE_INACTIVE_Z true  // Set 'false' if the nozzle could fall onto your printed part!
@@ -963,7 +964,7 @@
 
 // Slow down the machine if the lookahead buffer is (by default) half full.
 // Increase the slowdown divisor for larger buffer sizes.
-#define SLOWDOWN
+//#define SLOWDOWN
 #if ENABLED(SLOWDOWN)
   #define SLOWDOWN_DIVISOR 2
 #endif
@@ -1089,7 +1090,7 @@
  * vibration and surface artifacts. The algorithm adapts to provide the best possible step smoothing at the
  * lowest stepping frequencies.
  */
-//#define ADAPTIVE_STEP_SMOOTHING
+#define ADAPTIVE_STEP_SMOOTHING
 
 /**
  * Custom Microstepping
@@ -1103,7 +1104,7 @@
 //#define MICROSTEP32 HIGH,LOW,HIGH
 
 // Microstep settings (Requires a board with pins named X_MS1, X_MS2, etc.)
-#define MICROSTEP_MODES { 16, 16, 16, 16, 16, 16 } // [1,2,4,8,16]
+#define MICROSTEP_MODES { 32, 32, 32, 32, 32, 32 } // [1,2,4,8,16]
 
 /**
  *  @section  stepper motor current
@@ -1333,7 +1334,7 @@
 
   //#define MEDIA_MENU_AT_TOP               // Force the media menu to be listed on the top of the main menu
 
-  #define EVENT_GCODE_SD_ABORT "G28XY"      // G-code to run on SD Abort Print (e.g., "G28XY" or "G27")
+  #define EVENT_GCODE_SD_ABORT "G28"        // G-code to run on SD Abort Print (e.g., "G28XY" or "G27")
 
   #if ENABLED(PRINTER_EVENT_LEDS)
     #define PE_LEDS_COMPLETED_TIME  (30*60) // (seconds) Time to keep the LED "done" color before restoring normal illumination
@@ -1413,10 +1414,10 @@
   //#define UTF_FILENAME_SUPPORT
 
   // This allows hosts to request long names for files and folders with M33
-  //#define LONG_FILENAME_HOST_SUPPORT
+  #define LONG_FILENAME_HOST_SUPPORT
 
   // Enable this option to scroll long filenames in the SD card menu
-  //#define SCROLL_LONG_FILENAMES
+  #define SCROLL_LONG_FILENAMES
 
   // Leave the heaters on after Stop Print (not recommended!)
   //#define SD_ABORT_NO_COOLDOWN
@@ -1594,10 +1595,10 @@
    */
   //#define STATUS_COMBINE_HEATERS    // Use combined heater images instead of separate ones
   //#define STATUS_HOTEND_NUMBERLESS  // Use plain hotend icons instead of numbered ones (with 2+ hotends)
-  #define STATUS_HOTEND_INVERTED      // Show solid nozzle bitmaps when heating (Requires STATUS_HOTEND_ANIM for numbered hotends)
-  #define STATUS_HOTEND_ANIM          // Use a second bitmap to indicate hotend heating
-  #define STATUS_BED_ANIM             // Use a second bitmap to indicate bed heating
-  #define STATUS_CHAMBER_ANIM         // Use a second bitmap to indicate chamber heating
+  //#define STATUS_HOTEND_INVERTED      // Show solid nozzle bitmaps when heating (Requires STATUS_HOTEND_ANIM for numbered hotends)
+  //#define STATUS_HOTEND_ANIM          // Use a second bitmap to indicate hotend heating
+  //#define STATUS_BED_ANIM             // Use a second bitmap to indicate bed heating
+  //#define STATUS_CHAMBER_ANIM         // Use a second bitmap to indicate chamber heating
   //#define STATUS_CUTTER_ANIM        // Use a second bitmap to indicate spindle / laser active
   //#define STATUS_COOLER_ANIM        // Use a second bitmap to indicate laser cooling
   //#define STATUS_FLOWMETER_ANIM     // Use multiple bitmaps to indicate coolant flow
@@ -1822,7 +1823,7 @@
  *
  * Warning: Does not respect endstops!
  */
-//#define BABYSTEPPING
+#define BABYSTEPPING
 #if ENABLED(BABYSTEPPING)
   //#define INTEGRATED_BABYSTEPPING         // EXPERIMENTAL integration of babystepping into the Stepper ISR
   //#define BABYSTEP_WITHOUT_HOMING
@@ -1833,7 +1834,7 @@
   #define BABYSTEP_MULTIPLICATOR_Z  1       // (steps or mm) Steps or millimeter distance for each Z babystep
   #define BABYSTEP_MULTIPLICATOR_XY 1       // (steps or mm) Steps or millimeter distance for each XY babystep
 
-  //#define DOUBLECLICK_FOR_Z_BABYSTEPPING  // Double-click on the Status Screen for Z Babystepping.
+  #define DOUBLECLICK_FOR_Z_BABYSTEPPING  // Double-click on the Status Screen for Z Babystepping.
   #if ENABLED(DOUBLECLICK_FOR_Z_BABYSTEPPING)
     #define DOUBLECLICK_MAX_INTERVAL 1250   // Maximum interval between clicks, in milliseconds.
                                             // Note: Extra time may be added to mitigate controller latency.
@@ -1869,7 +1870,7 @@
  *
  * See https://marlinfw.org/docs/features/lin_advance.html for full instructions.
  */
-//#define LIN_ADVANCE
+#define LIN_ADVANCE
 #if ENABLED(LIN_ADVANCE)
   //#define EXTRA_LIN_ADVANCE_K // Enable for second linear advance constants
   #define LIN_ADVANCE_K 0.22    // Unit: mm compression per 1mm/s extruder speed
@@ -2053,7 +2054,7 @@
 #endif
 
 // Moves (or segments) with fewer steps than this will be joined with the next move
-#define MIN_STEPS_PER_SEGMENT 6
+#define MIN_STEPS_PER_SEGMENT 1
 
 /**
  * Minimum delay before and after setting the stepper DIR (in ns)
@@ -2347,28 +2348,28 @@
  *
  * Enable PARK_HEAD_ON_PAUSE to add the G-code M125 Pause and Park.
  */
-//#define ADVANCED_PAUSE_FEATURE
+#define ADVANCED_PAUSE_FEATURE
 #if ENABLED(ADVANCED_PAUSE_FEATURE)
   #define PAUSE_PARK_RETRACT_FEEDRATE         60  // (mm/s) Initial retract feedrate.
   #define PAUSE_PARK_RETRACT_LENGTH            2  // (mm) Initial retract.
                                                   // This short retract is done immediately, before parking the nozzle.
-  #define FILAMENT_CHANGE_UNLOAD_FEEDRATE     10  // (mm/s) Unload filament feedrate. This can be pretty fast.
+  #define FILAMENT_CHANGE_UNLOAD_FEEDRATE     40  // (mm/s) Unload filament feedrate. This can be pretty fast.
   #define FILAMENT_CHANGE_UNLOAD_ACCEL        25  // (mm/s^2) Lower acceleration may allow a faster feedrate.
-  #define FILAMENT_CHANGE_UNLOAD_LENGTH      100  // (mm) The length of filament for a complete unload.
+  #define FILAMENT_CHANGE_UNLOAD_LENGTH      800  // (mm) The length of filament for a complete unload.
                                                   //   For Bowden, the full length of the tube and nozzle.
                                                   //   For direct drive, the full length of the nozzle.
                                                   //   Set to 0 for manual unloading.
   #define FILAMENT_CHANGE_SLOW_LOAD_FEEDRATE   6  // (mm/s) Slow move when starting load.
   #define FILAMENT_CHANGE_SLOW_LOAD_LENGTH     0  // (mm) Slow length, to allow time to insert material.
                                                   // 0 to disable start loading and skip to fast load only
-  #define FILAMENT_CHANGE_FAST_LOAD_FEEDRATE   6  // (mm/s) Load filament feedrate. This can be pretty fast.
+  #define FILAMENT_CHANGE_FAST_LOAD_FEEDRATE  40  // (mm/s) Load filament feedrate. This can be pretty fast.
   #define FILAMENT_CHANGE_FAST_LOAD_ACCEL     25  // (mm/s^2) Lower acceleration may allow a faster feedrate.
-  #define FILAMENT_CHANGE_FAST_LOAD_LENGTH     0  // (mm) Load length of filament, from extruder gear to nozzle.
+  #define FILAMENT_CHANGE_FAST_LOAD_LENGTH   700  // (mm) Load length of filament, from extruder gear to nozzle.
                                                   //   For Bowden, the full length of the tube and nozzle.
                                                   //   For direct drive, the full length of the nozzle.
-  //#define ADVANCED_PAUSE_CONTINUOUS_PURGE       // Purge continuously up to the purge length until interrupted.
+  #define ADVANCED_PAUSE_CONTINUOUS_PURGE         // Purge continuously up to the purge length until interrupted.
   #define ADVANCED_PAUSE_PURGE_FEEDRATE        3  // (mm/s) Extrude feedrate (after loading). Should be slower than load feedrate.
-  #define ADVANCED_PAUSE_PURGE_LENGTH         50  // (mm) Length to extrude after loading.
+  #define ADVANCED_PAUSE_PURGE_LENGTH        150  // (mm) Length to extrude after loading.
                                                   //   Set to 0 for manual extrusion.
                                                   //   Filament can be extruded repeatedly from the Filament Change menu
                                                   //   until extrusion is consistent, and to purge old filament.
@@ -2385,10 +2386,10 @@
   #define FILAMENT_CHANGE_ALERT_BEEPS         10  // Number of alert beeps to play when a response is needed.
   #define PAUSE_PARK_NO_STEPPER_TIMEOUT           // Enable for XYZ steppers to stay powered on during filament change.
 
-  //#define PARK_HEAD_ON_PAUSE                    // Park the nozzle during pause and filament change.
+  #define PARK_HEAD_ON_PAUSE                    // Park the nozzle during pause and filament change.
   //#define HOME_BEFORE_FILAMENT_CHANGE           // If needed, home before parking for filament change
 
-  //#define FILAMENT_LOAD_UNLOAD_GCODES           // Add M701/M702 Load/Unload G-codes, plus Load/Unload in the LCD Prepare menu.
+  #define FILAMENT_LOAD_UNLOAD_GCODES           // Add M701/M702 Load/Unload G-codes, plus Load/Unload in the LCD Prepare menu.
   //#define FILAMENT_UNLOAD_ALL_EXTRUDERS         // Allow M702 to unload all extruders above a minimum target temp (as set by M302)
 #endif
 
@@ -2545,77 +2546,74 @@
    * Override for each driver with <driver>_INTERPOLATE settings below
    */
   #define INTERPOLATE      true
+  #define DEFAULT_CURRENT    800 // mA
+  #define DEFAULT_MICROSTEPS    32 // microsteps per mm
 
   #if AXIS_IS_TMC(X)
-    #define X_CURRENT       800        // (mA) RMS current. Multiply by 1.414 for peak current.
+    #define X_CURRENT       DEFAULT_CURRENT        // (mA) RMS current. Multiply by 1.414 for peak current.
     #define X_CURRENT_HOME  X_CURRENT  // (mA) RMS current for sensorless homing
-    #define X_MICROSTEPS     16        // 0..256
-    #define X_RSENSE          0.11
-    #define X_CHAIN_POS      -1        // -1..0: Not chained. 1: MCU MOSI connected. 2: Next in chain, ...
+    #define X_MICROSTEPS    DEFAULT_MICROSTEPS    // 0..256
+    #define X_RSENSE        0.11
+    #define X_CHAIN_POS     -1    // -1..0: Not chained. 1: MCU MOSI connected. 2: Next in chain, ...
     //#define X_INTERPOLATE  true      // Enable to override 'INTERPOLATE' for the X axis
   #endif
 
   #if AXIS_IS_TMC(X2)
-    #define X2_CURRENT      800
+    #define X2_CURRENT      DEFAULT_CURRENT
     #define X2_CURRENT_HOME X2_CURRENT
-    #define X2_MICROSTEPS    X_MICROSTEPS
-    #define X2_RSENSE         0.11
-    #define X2_CHAIN_POS     -1
-    //#define X2_INTERPOLATE true
+    #define X2_MICROSTEPS   DEFAULT_MICROSTEPS
+    #define X2_RSENSE       0.11
+    #define X2_CHAIN_POS    -1
   #endif
 
   #if AXIS_IS_TMC(Y)
-    #define Y_CURRENT       800
+    #define Y_CURRENT       DEFAULT_CURRENT
     #define Y_CURRENT_HOME  Y_CURRENT
-    #define Y_MICROSTEPS     16
-    #define Y_RSENSE          0.11
-    #define Y_CHAIN_POS      -1
+    #define Y_MICROSTEPS    DEFAULT_MICROSTEPS
+    #define Y_RSENSE        0.11
+    #define Y_CHAIN_POS     -1
     //#define Y_INTERPOLATE  true
   #endif
 
   #if AXIS_IS_TMC(Y2)
-    #define Y2_CURRENT      800
+    #define Y2_CURRENT      DEFAULT_CURRENT
     #define Y2_CURRENT_HOME Y2_CURRENT
-    #define Y2_MICROSTEPS    Y_MICROSTEPS
-    #define Y2_RSENSE         0.11
-    #define Y2_CHAIN_POS     -1
-    //#define Y2_INTERPOLATE true
+    #define Y2_MICROSTEPS   DEFAULT_MICROSTEPS
+    #define Y2_RSENSE       0.11
+    #define Y2_CHAIN_POS    -1
   #endif
 
   #if AXIS_IS_TMC(Z)
-    #define Z_CURRENT       800
+    #define Z_CURRENT       DEFAULT_CURRENT
     #define Z_CURRENT_HOME  Z_CURRENT
-    #define Z_MICROSTEPS     16
-    #define Z_RSENSE          0.11
-    #define Z_CHAIN_POS      -1
+    #define Z_MICROSTEPS    DEFAULT_MICROSTEPS
+    #define Z_RSENSE        0.11
+    #define Z_CHAIN_POS     -1
     //#define Z_INTERPOLATE  true
   #endif
 
   #if AXIS_IS_TMC(Z2)
-    #define Z2_CURRENT      800
+    #define Z2_CURRENT      DEFAULT_CURRENT
     #define Z2_CURRENT_HOME Z2_CURRENT
-    #define Z2_MICROSTEPS    Z_MICROSTEPS
-    #define Z2_RSENSE         0.11
-    #define Z2_CHAIN_POS     -1
-    //#define Z2_INTERPOLATE true
+    #define Z2_MICROSTEPS   DEFAULT_MICROSTEPS
+    #define Z2_RSENSE       0.11
+    #define Z2_CHAIN_POS    -1
   #endif
 
   #if AXIS_IS_TMC(Z3)
-    #define Z3_CURRENT      800
+    #define Z3_CURRENT      DEFAULT_CURRENT
     #define Z3_CURRENT_HOME Z3_CURRENT
-    #define Z3_MICROSTEPS    Z_MICROSTEPS
-    #define Z3_RSENSE         0.11
-    #define Z3_CHAIN_POS     -1
-    //#define Z3_INTERPOLATE true
+    #define Z3_MICROSTEPS   DEFAULT_MICROSTEPS
+    #define Z3_RSENSE       0.11
+    #define Z3_CHAIN_POS    -1
   #endif
 
   #if AXIS_IS_TMC(Z4)
-    #define Z4_CURRENT      800
+    #define Z4_CURRENT      DEFAULT_CURRENT
     #define Z4_CURRENT_HOME Z4_CURRENT
-    #define Z4_MICROSTEPS    Z_MICROSTEPS
-    #define Z4_RSENSE         0.11
-    #define Z4_CHAIN_POS     -1
-    //#define Z4_INTERPOLATE true
+    #define Z4_MICROSTEPS   DEFAULT_MICROSTEPS
+    #define Z4_RSENSE       0.11
+    #define Z4_CHAIN_POS    -1
   #endif
 
   #if AXIS_IS_TMC(I)
@@ -2646,67 +2644,60 @@
   #endif
 
   #if AXIS_IS_TMC(E0)
-    #define E0_CURRENT      800
-    #define E0_MICROSTEPS    16
-    #define E0_RSENSE         0.11
-    #define E0_CHAIN_POS     -1
+    #define E0_CURRENT      DEFAULT_CURRENT
+    #define E0_MICROSTEPS   DEFAULT_MICROSTEPS
+    #define E0_RSENSE       0.11
+    #define E0_CHAIN_POS    -1
     //#define E0_INTERPOLATE true
   #endif
 
   #if AXIS_IS_TMC(E1)
-    #define E1_CURRENT      800
-    #define E1_MICROSTEPS   E0_MICROSTEPS
-    #define E1_RSENSE         0.11
-    #define E1_CHAIN_POS     -1
-    //#define E1_INTERPOLATE true
+    #define E1_CURRENT      DEFAULT_CURRENT
+    #define E1_MICROSTEPS   DEFAULT_MICROSTEPS
+    #define E1_RSENSE       0.11
+    #define E1_CHAIN_POS    -1
   #endif
 
   #if AXIS_IS_TMC(E2)
-    #define E2_CURRENT      800
-    #define E2_MICROSTEPS   E0_MICROSTEPS
-    #define E2_RSENSE         0.11
-    #define E2_CHAIN_POS     -1
-    //#define E2_INTERPOLATE true
+    #define E2_CURRENT      DEFAULT_CURRENT
+    #define E2_MICROSTEPS   DEFAULT_MICROSTEPS
+    #define E2_RSENSE       0.11
+    #define E2_CHAIN_POS    -1
   #endif
 
   #if AXIS_IS_TMC(E3)
-    #define E3_CURRENT      800
-    #define E3_MICROSTEPS   E0_MICROSTEPS
-    #define E3_RSENSE         0.11
-    #define E3_CHAIN_POS     -1
-    //#define E3_INTERPOLATE true
+    #define E3_CURRENT      DEFAULT_CURRENT
+    #define E3_MICROSTEPS   DEFAULT_MICROSTEPS
+    #define E3_RSENSE       0.11
+    #define E3_CHAIN_POS    -1
   #endif
 
   #if AXIS_IS_TMC(E4)
-    #define E4_CURRENT      800
-    #define E4_MICROSTEPS   E0_MICROSTEPS
-    #define E4_RSENSE         0.11
-    #define E4_CHAIN_POS     -1
-    //#define E4_INTERPOLATE true
+    #define E4_CURRENT      DEFAULT_CURRENT
+    #define E4_MICROSTEPS   DEFAULT_MICROSTEPS
+    #define E4_RSENSE       0.11
+    #define E4_CHAIN_POS    -1
   #endif
 
   #if AXIS_IS_TMC(E5)
-    #define E5_CURRENT      800
-    #define E5_MICROSTEPS   E0_MICROSTEPS
-    #define E5_RSENSE         0.11
-    #define E5_CHAIN_POS     -1
-    //#define E5_INTERPOLATE true
+    #define E5_CURRENT      DEFAULT_CURRENT
+    #define E5_MICROSTEPS   DEFAULT_MICROSTEPS
+    #define E5_RSENSE       0.11
+    #define E5_CHAIN_POS    -1
   #endif
 
   #if AXIS_IS_TMC(E6)
-    #define E6_CURRENT      800
-    #define E6_MICROSTEPS   E0_MICROSTEPS
-    #define E6_RSENSE         0.11
-    #define E6_CHAIN_POS     -1
-    //#define E6_INTERPOLATE true
+    #define E6_CURRENT      DEFAULT_CURRENT
+    #define E6_MICROSTEPS   DEFAULT_MICROSTEPS
+    #define E6_RSENSE       0.11
+    #define E6_CHAIN_POS    -1
   #endif
 
   #if AXIS_IS_TMC(E7)
-    #define E7_CURRENT      800
-    #define E7_MICROSTEPS   E0_MICROSTEPS
-    #define E7_RSENSE         0.11
-    #define E7_CHAIN_POS     -1
-    //#define E7_INTERPOLATE true
+    #define E7_CURRENT      DEFAULT_CURRENT
+    #define E7_MICROSTEPS   DEFAULT_MICROSTEPS
+    #define E7_RSENSE       0.11
+    #define E7_CHAIN_POS    -1
   #endif
 
   /**
@@ -2909,7 +2900,7 @@
     #define X2_STALL_SENSITIVITY X_STALL_SENSITIVITY
     #define Y_STALL_SENSITIVITY  8
     #define Y2_STALL_SENSITIVITY Y_STALL_SENSITIVITY
-    //#define Z_STALL_SENSITIVITY  8
+    #define Z_STALL_SENSITIVITY  8
     //#define Z2_STALL_SENSITIVITY Z_STALL_SENSITIVITY
     //#define Z3_STALL_SENSITIVITY Z_STALL_SENSITIVITY
     //#define Z4_STALL_SENSITIVITY Z_STALL_SENSITIVITY
