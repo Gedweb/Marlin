@@ -116,8 +116,12 @@
  * Note: The first serial port (-1 or 0) will always be used by the Arduino bootloader.
  *
  * :[-1, 0, 1, 2, 3, 4, 5, 6, 7]
+ *
+ * -1 is for USB CDC
+ * 1 is for TFT
+ * 6 is for ESP-01S
  */
-#define SERIAL_PORT -1
+#define SERIAL_PORT 6
 
 /**
  * Serial Port Baud Rate
@@ -974,7 +978,8 @@
  */
 // delta speeds must be the same on xyz
 // calculate with the microstep settings from Configuration_adv.h
-#define DEFAULT_XYZ_STEPS_PER_UNIT 200
+//#define DEFAULT_XYZ_STEPS_PER_UNIT 200 // 16 touth
+#define DEFAULT_XYZ_STEPS_PER_UNIT 160 // 20 touth
 #define DEFAULT_AXIS_STEPS_PER_UNIT   { DEFAULT_XYZ_STEPS_PER_UNIT, DEFAULT_XYZ_STEPS_PER_UNIT, DEFAULT_XYZ_STEPS_PER_UNIT, 734 }  // default steps per unit
 
 /**
