@@ -64,7 +64,7 @@
 // config/examples/delta directory and customize for your machine.
 //
 // Delta height (and other params)
-// M665 H375.9
+// M665 H347
 //
 // Enable hotend FAN
 // M106 P2 S255
@@ -99,7 +99,7 @@
  */
 
 // Show the Marlin bootscreen on startup. ** ENABLE FOR PRODUCTION **
-#define SHOW_BOOTSCREEN
+//#define SHOW_BOOTSCREEN
 
 // Show the bitmap in Marlin/_Bootscreen.h on startup.
 //#define SHOW_CUSTOM_BOOTSCREEN
@@ -119,9 +119,10 @@
  *
  * -1 is for USB CDC
  * 1 is for TFT
+ * 3 onboard pin out
  * 6 is for ESP-01S
  */
-#define SERIAL_PORT 6
+#define SERIAL_PORT 3
 
 /**
  * Serial Port Baud Rate
